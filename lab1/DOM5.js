@@ -1,30 +1,45 @@
 import { EventEmitter } from "events";
 
 class DomClass extends EventEmitter {
-    addEventListener(eventName, callback) {
-        this.on(eventName, callback);
-    }
-    removeEventListener(eventName, callback) {
-        this.off(eventName, callback);
-    }
-    dispatchEvent(eventName, eventData = {}) {
-        const event = {
-            type: eventName,
-            timespan: new Date(),
-            ...eventData
-        }
-        this.emit(eventName, event);
-    }
+  addEventListener(eventName, callback) {
+    this.on(eventName, callback);
+  }
+
+  removeEventListener(eventName, callback) {
+    this.off(eventName, callback);
+  }
+
+  dispatchEvent(eventName, eventData = {}) {
+    const event = {
+      type: eventName,
+      timestamp: new Date(),
+      ...eventData,
+    };
+
+    this.emit(eventName, event);
+  }
 }
+
 const button = new DomClass();
+
 const handleClick = (event) => {
-    console.log(`button clicked type : ${event.type} at ${event.timespan}`);
-}
-button.addEventListener("Click", handleClick);
+  console.log(
+    `Button ${event.target} clicked | Type: ${event.type} | Time: ${event.timestamp}`,
+  );
+};
+
+// Add Event Listener
+button.addEventListener("click", handleClick);
+
+// Dispatch Event
 button.dispatchEvent("click", {
-    target: "submitBtn",
+  target: "submitBtn",
 });
+
+// Remove Event Listener
 button.removeEventListener("click", handleClick);
+
+// This event will not execute because the listener has been removed
 button.dispatchEvent("click", {
-    target: "resetBtn",
+  target: "resetBtn",
 });
