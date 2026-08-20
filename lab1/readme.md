@@ -19,7 +19,7 @@ single threaded bydefault
 
 # Modern js is divided into 2 category
 
-- CommonJS (.cjs=>supports OOPS ->require
-- priority(nextTick,Promise,SetImmediate)
-- ModuleJS (.mjs)-> follow modular approach ->
-- priority(promises,nextTick,setImmediate/setTimeout)
+  - CommonJS (.cjs=>supports OOPS ->require)
+  - priority(nextTick,Promise,SetImmediate)
+  - ModuleJS (.mjs)-> follow modular approach ->
+  - priority(promises,nextTick,setImmediate/setTimeout)
