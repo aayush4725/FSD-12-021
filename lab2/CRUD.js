@@ -2,7 +2,7 @@ import readline from "readline/promises";
 import { stdin, stdout } from "process";
 import { readFile, writeFile } from "fs/promises";
 
-const FILE = "product.json";
+const FILE = new URL("./product.json", import.meta.url);
 
 const getCart = async () => {
   const data = await readFile(FILE, "utf-8");
@@ -28,6 +28,28 @@ const addToCart = async (product) => {
 const showCart = async () => {
   const data = await getCart();
   console.table(data);
+   let total =0;
+  // for(let i=0;i<data.length;i++)
+  // {
+  //   total=total+data[i].qty*data[i].price;
+  // }
+  total =data.reduce((t,item) => t + item.qty * item.price, 0);
+   console.log("you have to pay: Rs.",total);
+  
+};
+
+const removeFromCart = async (pid) =>{
+  const data =await getCart();
+  const newData  = data.filter((item) => item.id !== pid);
+  const newCount = newData.length;
+  if(count == newCount){
+    console.log(`Product with id ${pid} not found `);
+  }
+  else{
+    await saveCart(newData);
+    console.log (` product with id ${pid} deleted successfully`);
+  }
+
 };
 
 const main = async () => {
@@ -75,4 +97,4 @@ const main = async () => {
   cin.close();
 };
 
-main();h
+main();
